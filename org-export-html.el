@@ -12,6 +12,7 @@
                         if selected, link to Bootstrap CDN by default" nil)
 	("--package-dir" "directory containing elpa packages" "~/.org-export")
 	("--verbose" "enable debugging message on error" nil)
+	("--no-color-theme" "do not use color-theme for syntax highlighting" nil)
 	("--no-install" "do not install lisp packages;
                          can lead to errors if required packages are missing" nil)
 	))
@@ -33,7 +34,8 @@ yes' in the block header.
 (require 'ox-html)
 
 ;; provides colored syntax highlighting
-(require 'color-theme)
+(if (getopt "no-color-theme") ()
+    (require 'color-theme))
 
 (setq debug-on-error (getopt "verbose"))
 ;; (setq debug-on-signal (getopt "debug"))
