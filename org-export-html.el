@@ -12,6 +12,8 @@
                         if selected, link to Bootstrap CDN by default" nil)
 	("--package-dir" "directory containing elpa packages" "~/.org-export")
 	("--verbose" "enable debugging message on error" nil)
+	("--no-install" "do not install lisp packages;
+                         can lead to errors if required packages are missing" nil)
 	))
 
 (setq args (cli-parse-args options-alist "
@@ -23,8 +25,9 @@ header. Individual blocks can be selectively evaluated using ':eval
 yes' in the block header.
 "))
 (defun getopt (name) (gethash name args))
-(cli-el-get-setup
- (getopt "package-dir") '(ess htmlize org color-theme))
+(if (getopt "no-install") ()
+    (cli-el-get-setup
+      (getopt "package-dir") '(ess htmlize org color-theme)))
 
 (require 'ox)
 (require 'ox-html)
