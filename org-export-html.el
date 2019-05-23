@@ -6,6 +6,7 @@
 	("--outfile" "path to output .html file (use base name of infile by default)"
 	 nil)
 	("--evaluate" "evaluate source code blocks" nil)
+	("--load" "load elisp file" nil)
 	("--css" "path or URL of css stylesheet" nil)
 	("--embed-css" "Include contents of css in a <style> block" nil)
 	("--bootstrap" "make Bootstrap-specific modifications to html output;
@@ -137,6 +138,9 @@ yes' in the block header.
 (defvar outfile
   (file-truename
    (or (getopt "outfile") (replace-regexp-in-string "\.org$" ".html" infile))))
+
+(if (getopt "load")
+  (load (getopt "load")))
 
 ;; remember the current directory; find-file changes it
 (defvar cwd default-directory)
